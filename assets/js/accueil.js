@@ -179,24 +179,20 @@
         var etinc = [];
         ICE.boucle(function () {
           if (!vis || !W) return;
+          // l'image du foyer est vue du dessus : on ajoute seulement la lueur qui respire et les étincelles qui montent
           var t = performance.now() / 1000; ctx.clearRect(0, 0, W, H);
-          var cx = W / 2, base = H * .86;
-          var halo = ctx.createRadialGradient(cx, base, 0, cx, base, W * .6); halo.addColorStop(0, 'rgba(255,120,40,.4)'); halo.addColorStop(1, 'rgba(255,90,20,0)');
+          var cx = W * .49, cy = H * .615, puls = .75 + .25 * Math.sin(t * 3.1) * Math.sin(t * 1.7 + 1);
+          var halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * .42);
+          halo.addColorStop(0, 'rgba(255,140,50,' + (.32 * puls).toFixed(3) + ')'); halo.addColorStop(1, 'rgba(255,90,20,0)');
           ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
           ctx.globalCompositeOperation = 'lighter';
-          for (var k = 0; k < 7; k++) {
-            var ph = t * (2.2 + k * .3) + k * 1.7, hh = H * (.42 + .22 * Math.sin(ph * .7 + k)) * (1 - k * .07), ww = W * (.16 - k * .012);
-            var sx = cx + Math.sin(ph) * W * .025 * (k % 2 ? 1 : -1), tipx = sx + Math.sin(ph * 1.3) * W * .06;
-            var gr = ctx.createLinearGradient(0, base, 0, base - hh); gr.addColorStop(0, 'rgba(255,190,90,.55)'); gr.addColorStop(.5, 'rgba(255,110,40,.35)'); gr.addColorStop(1, 'rgba(200,50,10,0)');
-            ctx.fillStyle = gr; ctx.beginPath(); ctx.moveTo(sx - ww, base);
-            ctx.bezierCurveTo(sx - ww * 1.1, base - hh * .45, tipx - ww * .2, base - hh * .7, tipx, base - hh);
-            ctx.bezierCurveTo(tipx + ww * .2, base - hh * .7, sx + ww * 1.1, base - hh * .45, sx + ww, base); ctx.fill();
+          if (Math.random() < .5) etinc.push({ x: cx + (Math.random() - .5) * W * .1, y: cy, vy: -.7 - Math.random() * 1.4, l: 0, m: 60 + Math.random() * 50 });
+          for (var e = etinc.length - 1; e >= 0; e--) {
+            var p = etinc[e]; p.l++; p.y += p.vy; p.x += Math.sin(p.l * .09 + e) * .45;
+            var a = 1 - p.l / p.m; if (a <= 0) { etinc.splice(e, 1); continue; }
+            ctx.fillStyle = 'rgba(255,' + (150 + 60 * a | 0) + ',80,' + a.toFixed(3) + ')'; ctx.beginPath(); ctx.arc(p.x, p.y, 1.1 + a, 0, 6.283); ctx.fill();
           }
-          if (Math.random() < .35) etinc.push({ x: cx + (Math.random() - .5) * W * .2, y: base - H * .2, vy: -1 - Math.random() * 1.6, l: 0 });
-          for (var e = etinc.length - 1; e >= 0; e--) { var p = etinc[e]; p.l++; p.y += p.vy; p.x += Math.sin(p.l * .1) * .4; var a = 1 - p.l / 70; if (a <= 0) { etinc.splice(e, 1); continue; } ctx.fillStyle = 'rgba(255,170,90,' + a + ')'; ctx.fillRect(p.x, p.y, 2, 2); }
           ctx.globalCompositeOperation = 'source-over';
-          ctx.strokeStyle = 'rgba(80,60,40,.9)'; ctx.lineWidth = 7; ctx.lineCap = 'round';
-          ctx.beginPath(); ctx.moveTo(cx - W * .28, base + 6); ctx.lineTo(cx + W * .22, base - 10); ctx.moveTo(cx + W * .28, base + 6); ctx.lineTo(cx - W * .22, base - 10); ctx.stroke();
         });
         return function () { equipe.classList.remove('equipe--cercle'); fiche.innerHTML = ''; actif = -1; membres.forEach(function (m) { m.classList.remove('is-actif'); }); };
       });

@@ -554,7 +554,7 @@
       ICE.visible(c, function (x) { v = x; });
       ICE.boucle(function () {
         if (!v) return; var t = performance.now() / 1000; ctx.clearRect(0, 0, w, h);
-        var g = ctx.createLinearGradient(0, 0, 0, h); g.addColorStop(0, 'rgba(14,24,30,.9)'); g.addColorStop(1, 'rgba(15,17,13,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+        
         for (var i = 0; i < etoiles.length; i++) { var e = etoiles[i], a = .35 + .65 * Math.abs(Math.sin(t * e.s + e.p)); ctx.fillStyle = 'rgba(230,226,214,' + (a * .85).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 6.283); ctx.fill(); }
       });
     });

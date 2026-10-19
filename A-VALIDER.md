@@ -1,6 +1,6 @@
 # ICE Attitude — points à valider avec le client
 
-Maquette v1 (accueil, team building, stage survie 1 journée, mentions légales).
+Maquette v2 (accueil, team building, stage survie 1 journée, mentions légales).
 Formulaires, réservations et paiements sont simulés : aucune donnée n'est envoyée.
 
 ## Incohérences entre ice-attitude.fr et iceattitude.com
@@ -32,5 +32,5 @@ Formulaires, réservations et paiements sont simulés : aucune donnée n'est env
 
 ## Images
 - Photos : sites ice-attitude.fr et iceattitude.com.
-- Illustrations d'ambiance : Grok (11 images). Les 11 images facultatives ou conseillées du document Grok peuvent encore enrichir les sections.
+- Illustrations d'ambiance : Grok (21 images : heros, fonds de sections, insectes, braises, nuit étoilée, foyer vu du dessus, etc.).
 - Non reprises : photos de banque d'images (Shutterstock, Wix), visuel du kit feu d'une marque tierce, photo d'insectes avec scorpion.
